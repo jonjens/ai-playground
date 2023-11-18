@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DALL-E 2 Image Variation</title>
+    <script>
+        function uploadImage() {
+            const fileInput = document.getElementById('imageFileInput').files[0];
+            const formData = new FormData();
+            formData.append('file', fileInput);
+
+            fetch('/generate', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.blob())
+                .then(blob => {
+                    const imageUrl = URL.createObjectURL(blob);
+                    document.getElementById('variationImage').src = imageUrl;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+<h1>DALL-E 2 Image Variation</h1>
+<form id="imageUploadForm" enctype="multipart/form-data">
+    <input type="file" id="imageFileInput" name="imageFile" accept="image/*">
+    <button type="button" onclick="uploadImage()">Upload</button>
+</form>
+<hr>
+<h2>Variation Image</h2>
+<div id="variationImageContainer">
+    <img id="variationImage" src="#" alt="Variation Image">
+</div>
+</body>
+</html>
