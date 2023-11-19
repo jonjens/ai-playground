@@ -12,6 +12,9 @@ public class EnvService {
     @Value("${dalle}")
     private String dalle;
 
+    public void setTest(){
+
+    }
 
     public String getTest(){
         return test;
