@@ -1,5 +1,7 @@
 package com.jens.aiplayground.controller;
 
+import com.jens.aiplayground.service.EnvService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +16,10 @@ import java.nio.file.Paths;
 @RestController
 public class OpenAiController {
 
-    private static final String API_KEY = "${dall-e}";
+    @Autowired
+    EnvService envService;
+
+    private final String API_KEY = envService.getKey();
     private static final String DALLE_API_ENDPOINT = "https://api.openai.com/v1/images/variations";
     private static final String UPLOAD_DIR = "C:\\Users\\jonas\\uploadpath\\";
 
