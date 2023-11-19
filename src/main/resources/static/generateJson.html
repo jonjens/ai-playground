@@ -12,9 +12,11 @@
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.blob())
-                .then(blob => {
-                    const imageUrl = URL.createObjectURL(blob);
+                .then(response => response.json()) // Parse the JSON response
+                .then(data => {
+                    const imageUrl = data.data[0].url; // Extract the image URL from the JSON response
+
+                    // Set the src attribute of the image
                     document.getElementById('variationImage').src = imageUrl;
                 })
                 .catch(error => console.error('Error:', error));
@@ -30,6 +32,7 @@
 <hr>
 <h2>Variation Image</h2>
 <div id="variationImageContainer">
+    <!-- Set the initial src attribute to a placeholder or blank -->
     <img id="variationImage" src="#" alt="Variation Image">
 </div>
 </body>
