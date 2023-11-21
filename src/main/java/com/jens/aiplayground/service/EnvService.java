@@ -12,10 +12,14 @@ public class EnvService {
     @Value("${dalle}")
     private String dalle;
 
+    @Value("${gpt4}")
+    private String gpt4;
+
     public void setTest(){
 
     }
 
+    public String getGpt4(){ return gpt4; }
     public String getTest(){
         return test;
     }

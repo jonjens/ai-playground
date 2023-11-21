@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GPT-4 Chat</title>
+    <style>
+        .loader {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+<h1>GPT-4 Chat</h1>
+
+<label for="userInput">Enter Your Message:</label><br>
+<textarea id="userInput" rows="5" cols="50"></textarea><br><br>
+
+<button onclick="sendRequest()">Send Request</button><br><br>
+
+<div id="loader" class="loader" style="display: none;"></div> <!-- Loading spinner -->
+
+<div id="response"></div>
+
+<script>
+    function sendRequest() {
+        const userInput = document.getElementById('userInput').value;
+
+        // Display loading spinner while waiting for the response
+        document.getElementById('loader').style.display = 'block';
+
+        fetch('/gpt4', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain' // Set the Content-Type to text/plain for the prompt
+            },
+            body: userInput
+        })
+            .then(response => response.text())
+            .then(data => {
+                // Hide loading spinner when the response is received
+                document.getElementById('loader').style.display = 'none';
+
+                document.getElementById('response').innerHTML = `<h2>Response:</h2><p>${data}</p>`;
+            })
+            .catch(error => {
+                // Hide loading spinner in case of error
+                document.getElementById('loader').style.display = 'none';
+                console.error('Error:', error);
+            });
+    }
+</script>
+</body>
+</html>
